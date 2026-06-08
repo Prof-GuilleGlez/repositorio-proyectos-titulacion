@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorio de Proyectos ISC | Tecnológico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        /* Header y navegación */
+        .header {
+            background: linear-gradient(135deg, #1a3c6e, #2a5298);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .user-info {
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* Selector de rol (demo) */
+        .role-selector {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .role-btn {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .role-btn.active {
+            background: #2a5298;
+            color: white;
+            box-shadow: 0 2px 8px rgba(42,82,152,0.3);
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Tarjetas y paneles */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: #1a3c6e;
+            border-left: 4px solid #2a5298;
+            padding-left: 0.75rem;
+        }
+
+        .card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2a5298;
+            margin: 0.5rem 0;
+        }
+
+        /* Tablas */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #1a3c6e;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .badge-active { background: #d4edda; color: #155724; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-progress { background: #cce5ff; color: #004085; }
+
+        /* Botones */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2a5298;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1a3c6e;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #2a5298;
+            color: #2a5298;
+        }
+
+        .btn-outline:hover {
+            background: #2a5298;
+            color: white;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Noticias / Publicaciones */
+        .news-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .news-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-title {
+            font-weight: bold;
+            color: #1a3c6e;
+        }
+
+        .news-date {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a3c6e;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+    <div class="header-container">
+        <div class="logo">
+            <h1>📁 Repositorio de Proyectos</h1>
+            <p>Ingeniería en Sistemas Computacionales | Instituto Tecnológico</p>
+        </div>
+        <div class="user-info">
+            👤 Usuario: <strong>admin@tecnologico.mx</strong> (Administrador)
+        </div>
+        <nav class="nav">
+            <a href="#">Inicio</a>
+            <a href="#">Proyectos</a>
+            <a href="#">Reportes</a>
+            <a href="#">Noticias</a>
+            <a href="#">Mi Perfil</a>
+            <a href="#">Salir</a>
+        </nav>
+    </div>
+</header>
+
+<!-- Selector de rol (simulación de diferentes vistas) -->
+<div class="role-selector" id="roleSelector">
+    <button class="role-btn active" data-role="admin">👑 Administrador</button>
+    <button class="role-btn" data-role="jefe">📋 Jefe de Carrera</button>
+    <button class="role-btn" data-role="docente">👨‍🏫 Docente</button>
+    <button class="role-btn" data-role="investigador">🔬 Investigador</button>
+    <button class="role-btn" data-role="alumno">🎓 Alumno</button>
+</div>
+
+<!-- Contenido dinámico según rol -->
+<div class="container" id="dynamicContent">
+    <!-- El contenido se carga con JavaScript -->
+</div>
+
+<footer class="footer">
+    <p>Sistema de Repositorio de Proyectos para Titulación | Instituto Tecnológico | Todos los derechos reservados</p>
+</footer>
+
+<script>
+    // Datos simulados para el maquetado
+    const proyectos = [
+        { id: 1, titulo: "Plataforma de Gestión Escolar", descripcion: "Desarrollo de un sistema integral para gestión de calificaciones", requisitos: "Conocimientos en React, Node.js, PostgreSQL", docente: "Dr. Camacho", fecha_limite: "2025-12-15", estado: "activo", perfil: "backend" },
+        { id: 2, titulo: "Análisis de Datos Educativos", descripcion: "Minería de datos para predecir deserción escolar", requisitos: "Python, Pandas, Machine Learning", docente: "Dra. González", fecha_limite: "2025-11-30", estado: "activo", perfil: "datos" },
+        { id: 3, titulo: "Aplicación Móvil para Biblioteca", descripcion: "App para consulta y reserva de libros", requisitos: "Flutter, Firebase", docente: "Mtra. López", fecha_limite: "2025-10-20", estado: "activo", perfil: "movil" },
+        { id: 4, titulo: "Sistema de Reconocimiento Facial", descripcion: "Control de acceso mediante IA", requisitos: "Python, OpenCV, Deep Learning", docente: "Dr. Martínez", fecha_limite: "2025-12-01", estado: "activo", perfil: "ia" }
+    ];
+
+    const noticias = [
+        { id: 1, titulo: "Convocatoria para proyectos de titulación 2025-2", fecha: "2025-06-01", autor: "Jefatura ISC", contenido: "Se invita a docentes e investigadores a registrar sus proyectos antes del 30 de agosto." },
+        { id: 2, titulo: "Taller de Desarrollo Ágil con Scrum", fecha: "2025-06-05", autor: "Coordinación de Posgrado", contenido: "Taller gratuito para estudiantes interesados en metodologías ágiles. 15 de junio." },
+        { id: 3, titulo: "Convocatoria de becas CONACYT", fecha: "2025-06-10", autor: "Departamento de Servicios Escolares", contenido: "Aplicación abierta hasta el 31 de julio para estudios de posgrado." }
+    ];
+
+    const estadisticas = {
+        totalAlumnos: 342,
+        totalDocentes: 28,
+        totalInvestigadores: 12,
+        proyectosActivos: 8,
+        alumnosPostulados: 156,
+        tituladosEstimados: 45
+    };
+
+    // Función para renderizar según el rol
+    function renderContent(role) {
+        const container = document.getElementById('dynamicContent');
+        
+        if (role === 'admin') {
+            container.innerHTML = `
+                <!-- Tarjetas de estadísticas -->
+                <div class="dashboard">
+                    <div class="card">
+                        <h3>👨‍🎓 Alumnos registrados</h3>
+                        <div class="number">${estadisticas.totalAlumnos}</div>
+                        <p>+12 este mes</p>
+                    </div>
+                    <div class="card">
+                        <h3>👩‍🏫 Docentes</h3>
+                        <div class="number">${estadisticas.totalDocentes}</div>
+                        <p>+2 investigadores asociados</p>
+                    </div>
+                    <div class="card">
+                        <h3>📋 Proyectos activos</h3>
+                        <div class="number">${estadisticas.proyectosActivos}</div>
+                        <p>${estadisticas.alumnosPostulados} alumnos postulados</p>
+                    </div>
+                    <div class="card">
+                        <h3>🎓 Titulados estimados</h3>
+                        <div class="number">${estadisticas.tituladosEstimados}</div>
+                        <p>Meta: 80 titulados en 2025</p>
+                    </div>
+                </div>
+
+                <!-- Gráfica simulada -->
+                <div class="card">
+                    <h3>📊 Avance de titulación por carrera</h3>
+                    <div style="height: 200px; background: linear-gradient(to top, #2a5298 0%, #2a5298 45%, #4a7ec7 45%, #4a7ec7 70%, #8ab3e0 70%, #8ab3e0 100%); border-radius: 8px; margin-top: 10px;"></div>
+                    <div class="grid-2" style="margin-top: 15px;">
+                        <div>🔵 ISC: 45 titulados</div>
+                        <div>🔷 Industrial: 38 titulados</div>
+                        <div>💠 Gestión: 22 titulados</div>
+                        <div>🌀 Mecatrónica: 31 titulados</div>
+                    </div>
+                </div>
+
+                <!-- Gestión de usuarios -->
+                <div class="table-container">
+                    <h3>👥 Gestión de Usuarios</h3>
+                    <button class="btn btn-primary" style="margin-bottom: 1rem;">+ Agregar usuario</button>
+                    <table>
+                        <thead>
+                            <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Carrera</th><th>Estado</th><th>Acciones</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Juan Pérez</td><td>juan@tecnologico.mx</td><td>Alumno</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                            <tr><td>María López</td><td>maria.lopez@tecnologico.mx</td><td>Docente</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                            <tr><td>Carlos Ruiz</td><td>cruiz@tecnologico.mx</td><td>Investigador</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                            <tr><td>Ana Torres</td><td>ana.torres@tecnologico.mx</td><td>Jefe de Carrera</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Reportes -->
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>📄 Generar Reportes</h3>
+                        <select style="margin: 10px 0;">
+                            <option>Reporte de alumnos por proyecto</option>
+                            <option>Reporte de docentes por proyecto</option>
+                            <option>Reporte de postulaciones</option>
+                            <option>Reporte general de titulación</option>
+                        </select>
+                        <button class="btn btn-primary">Generar reporte (PDF)</button>
+                    </div>
+                    <div class="card">
+                        <h3>📈 Estadísticas de la plataforma</h3>
+                        <p>Total inscritos: ${estadisticas.totalAlumnos + estadisticas.totalDocentes + estadisticas.totalInvestigadores}</p>
+                        <p>Proyectos publicados: 12</p>
+                        <p>Postulaciones realizadas: 187</p>
+                        <progress value="45" max="100" style="width:100%; height:10px;"></progress>
+                        <p>45% de avance en meta de titulación</p>
+                    </div>
+                </div>
+
+                <!-- Noticias (gestión) -->
+                <div class="news-section">
+                    <h3>📢 Publicaciones y noticias (Todas las carreras)</h3>
+                    <button class="btn btn-primary" style="margin-bottom: 1rem;">+ Nueva publicación</button>
+                    ${noticias.map(n => `
+                        <div class="news-item">
+                            <div class="news-title">${n.titulo}</div>
+                            <div class="news-date">${n.fecha} | Por: ${n.autor}</div>
+                            <p>${n.contenido}</p>
+                            <button class="btn btn-outline" style="margin-top: 0.5rem;">Editar</button>
+                            <button class="btn btn-outline" style="margin-top: 0.5rem;">Eliminar</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        } 
+        else if (role === 'jefe') {
+            container.innerHTML = `
+                <div class="dashboard">
+                    <div class="card"><h3>📊 Proyectos activos en ISC</h3><div class="number">${proyectos.length}</div></div>
+                    <div class="card"><h3>👨‍🎓 Alumnos postulados</h3><div class="number">78</div></div>
+                    <div class="card"><h3>👩‍🏫 Docentes participantes</h3><div class="number">12</div></div>
+                </div>
+                <div class="card">
+                    <h3>📈 Gráfica de avance de titulación (ISC)</h3>
+                    <div style="height: 150px; background: linear-gradient(90deg, #2a5298 0%, #2a5298 35%, #4a7ec7 35%, #4a7ec7 65%, #8ab3e0 65%, #8ab3e0 100%); border-radius: 8px;"></div>
+                    <div class="grid-2" style="margin-top: 10px;"><div>2023: 32 titulados</div><div>2024: 41 titulados</div><div>2025: 24 (al momento)</div></div>
+                </div>
+                <div class="table-container">
+                    <h3>📋 Proyectos de la carrera</h3>
+                    <button class="btn btn-primary" style="margin-bottom:1rem;">+ Crear proyecto</button>
+                    <table><thead><tr><th>Título</th><th>Docente/Investigador</th><th>Fecha límite</th><th>Postulantes</th><th>Estado</th></tr></thead><tbody>
+                        ${proyectos.map(p => `<tr><td>${p.titulo}</td><td>${p.docente}</td><td>${p.fecha_limite}</td><td>${Math.floor(Math.random()*15)+5}</td><td><span class="badge badge-progress">Activo</span></td></tr>`).join('')}
+                    </tbody></table>
+                </div>
+                <div class="news-section">
+                    <h3>📢 Publicar noticias para ISC</h3>
+                    <textarea placeholder="Escribe aquí la noticia..." rows="3" style="width:100%; margin-bottom:1rem;"></textarea>
+                    <button class="btn btn-primary">Publicar</button>
+                </div>
+            `;
+        }
+        else if (role === 'docente') {
+            container.innerHTML = `
+                <div class="dashboard">
+                    <div class="card"><h3>📌 Mis proyectos activos</h3><div class="number">3</div></div>
+                    <div class="card"><h3>👥 Alumnos postulados</h3><div class="number">24</div></div>
+                    <div class="card"><h3>✅ Proyectos completados</h3><div class="number">5</div></div>
+                </div>
+                <div class="card">
+                    <h3>➕ Publicar nuevo proyecto</h3>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Título</label><input type="text" placeholder="Ej: Desarrollo de aplicación web"></div>
+                        <div class="form-group"><label>Fecha límite</label><input type="date"></div>
+                        <div class="form-group"><label>Perfil requerido</label><select><option>Frontend</option><option>Backend</option><option>Datos</option><option>Móvil</option><option>IA</option></select></div>
+                        <div class="form-group"><label>Número de plazas</label><input type="number" placeholder="3"></div>
+                    </div>
+                    <div class="form-group"><label>Descripción</label><textarea rows="3" placeholder="Describe el proyecto..."></textarea></div>
+                    <div class="form-group"><label>Requisitos</label><textarea rows="2" placeholder="Conocimientos necesarios..."></textarea></div>
+                    <button class="btn btn-primary">Publicar proyecto</button>
+                </div>
+                <div class="table-container">
+                    <h3>📋 Mis proyectos publicados</h3>
+                    <table><thead><tr><th>Título</th><th>Postulantes</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
+                        ${proyectos.slice(0,2).map(p => `<tr><td>${p.titulo}</td><td>${Math.floor(Math.random()*10)+5}</td><td><span class="badge badge-progress">En curso</span></td><td><button class="btn btn-outline">Ver postulantes</button></td></tr>`).join('')}
+                    </tbody></table>
+                </div>
+            `;
+        }
+        else if (role === 'investigador') {
+            container.innerHTML = `
+                <div class="dashboard">
+                    <div class="card"><h3>🔬 Proyectos de investigación</h3><div class="number">2</div></div>
+                    <div class="card"><h3>👥 Alumnos colaboradores</h3><div class="number">8</div></div>
+                </div>
+                <div class="card">
+                    <h3>➕ Registrar proyecto de investigación</h3>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Título</label><input placeholder="Título del proyecto"></div>
+                        <div class="form-group"><label>Área</label><select><option>IA</option><option>Redes</option><option>Bases de datos</option><option>Software educativo</option></select></div>
+                    </div>
+                    <div class="form-group"><label>Descripción</label><textarea rows="3"></textarea></div>
+                    <button class="btn btn-primary">Registrar proyecto</button>
+                </div>
+                <div class="news-section">
+                    <h3>📢 Convocatorias para investigación</h3>
+                    <p>Próxima convocatoria de proyectos de investigación: 15 de agosto de 2025</p>
+                </div>
+            `;
+        }
+        else if (role === 'alumno') {
+            container.innerHTML = `
+                <div class="dashboard">
+                    <div class="card"><h3>📋 Proyectos disponibles</h3><div class="number">${proyectos.length}</div></div>
+                    <div class="card"><h3>📌 Mis postulaciones</h3><div class="number">2</div></div>
+                    <div class="card"><h3>✅ Perfil completado</h3><div class="number">85%</div></div>
+                </div>
+                <div class="card">
+                    <h3>🎯 Recomendados para tu perfil</h3>
+                    <p>Basado en tus habilidades: Backend, Bases de datos</p>
+                    <div class="badge badge-active">Backend</div>
+                    <div class="badge badge-active">PostgreSQL</div>
+                    <div class="badge badge-active">Node.js</div>
+                </div>
+                <div class="table-container">
+                    <h3>📋 Catálogo de proyectos</h3>
+                    <input type="text" placeholder="Buscar por título, docente o requisitos..." style="width:100%; margin-bottom:1rem; padding:0.5rem;">
+                    <table><thead><tr><th>Título</th><th>Descripción</th><th>Docente</th><th>Fecha límite</th><th>Perfil requerido</th><th></th></tr></thead><tbody>
+                        ${proyectos.map(p => `
+                            <tr>
+                                <td><strong>${p.titulo}</strong></td>
+                                <td>${p.descripcion.substring(0,60)}...</td>
+                                <td>${p.docente}</td>
+                                <td>${p.fecha_limite}</td>
+                                <td><span class="badge badge-progress">${p.perfil}</span></td>
+                                <td><button class="btn btn-primary" style="padding:0.3rem 0.8rem;">Postularme</button></td>
+                            </tr>
+                        `).join('')}
+                    </tbody></table>
+                </div>
+                <div class="news-section">
+                    <h3>📢 Últimas noticias</h3>
+                    ${noticias.slice(0,2).map(n => `
+                        <div class="news-item">
+                            <div class="news-title">${n.titulo}</div>
+                            <div class="news-date">${n.fecha}</div>
+                            <p>${n.contenido.substring(0,100)}...</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+    }
+
+    // Event listeners para el selector de rol
+    document.querySelectorAll('.role-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Actualizar clase activa
+            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const role = btn.getAttribute('data-role');
+            renderContent(role);
+        });
+    });
+
+    // Render inicial (Administrador)
+    renderContent('admin');
+</script>
+</body>
+</html>
