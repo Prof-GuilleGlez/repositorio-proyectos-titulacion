@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Repositorio de Proyectos ISCD | Tecnológico</title>
+    <title>Repositorio de Proyectos ISC | Tecnológico</title>
     <style>
+        /* ===== RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -12,75 +13,79 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             background-color: #f0f2f5;
-            color: #333;
+            color: #1a1a2e;
+            line-height: 1.5;
         }
 
-        /* Header y navegación */
+        /* ===== HEADER ===== */
         .header {
             background: linear-gradient(135deg, #9F2241, #7a1a32);
             color: white;
             padding: 1rem 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .header-container {
             max-width: 1400px;
             margin: 0 auto;
             display: flex;
+            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.25rem;
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            margin-bottom: 0.15rem;
         }
 
         .logo p {
-            font-size: 0.8rem;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
             opacity: 0.9;
+        }
+
+        .user-info {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 0.4rem 1rem;
+            border-radius: 8px;
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            white-space: nowrap;
         }
 
         .nav {
             display: flex;
-            gap: 1.5rem;
             flex-wrap: wrap;
+            gap: 0.5rem 1rem;
         }
 
         .nav a {
             color: white;
             text-decoration: none;
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
             border-radius: 5px;
             transition: background 0.3s;
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
         }
 
         .nav a:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        .user-info {
-            background: rgba(255,255,255,0.15);
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-
-        /* Selector de rol (demo) */
+        /* ===== SELECTOR DE ROL (CON :TARGET) ===== */
         .role-selector {
             background: white;
             padding: 1rem 2rem;
             border-bottom: 1px solid #ddd;
             display: flex;
-            gap: 1rem;
-            justify-content: center;
             flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
         }
 
-        .role-btn {
+        .role-selector a {
             padding: 0.6rem 1.5rem;
             border: none;
             border-radius: 25px;
@@ -89,25 +94,80 @@
             transition: all 0.3s;
             background: #e0e0e0;
             color: #333;
+            font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+            text-decoration: none;
+            user-select: none;
+            display: inline-block;
         }
 
-        .role-btn.active {
-            background: #9F2241;
-            color: white;
-            box-shadow: 0 2px 8px rgba(159,34,65,0.3);
+        .role-selector a:hover {
+            background: #ccc;
         }
 
-        /* Contenedor principal */
-        .container {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+        /* ===== VISTAS POR ROL (OCULTAS POR DEFECTO) ===== */
+        .role-view {
+            display: none;
         }
 
-        /* Tarjetas y paneles */
+        /* Mostrar solo la vista correspondiente al ancla seleccionada */
+        #view-admin:target ~ .container .view-admin,
+        #view-jefe:target ~ .container .view-jefe,
+        #view-docente:target ~ .container .view-docente,
+        #view-investigador:target ~ .container .view-investigador,
+        #view-alumno:target ~ .container .view-alumno {
+            display: block;
+        }
+
+        /* Vista por defecto: Administrador (cuando no hay # en la URL) */
+        .container .view-admin {
+            display: block;
+        }
+
+        /* Cuando hay un :target activo, ocultamos la vista por defecto */
+        #view-admin:target ~ .container .view-admin,
+        #view-jefe:target ~ .container .view-jefe,
+        #view-docente:target ~ .container .view-docente,
+        #view-investigador:target ~ .container .view-investigador,
+        #view-alumno:target ~ .container .view-alumno {
+            display: block;
+        }
+
+        /* Ocultar las vistas que no son el target */
+        #view-admin:target ~ .container .view-jefe,
+        #view-admin:target ~ .container .view-docente,
+        #view-admin:target ~ .container .view-investigador,
+        #view-admin:target ~ .container .view-alumno {
+            display: none;
+        }
+        #view-jefe:target ~ .container .view-admin,
+        #view-jefe:target ~ .container .view-docente,
+        #view-jefe:target ~ .container .view-investigador,
+        #view-jefe:target ~ .container .view-alumno {
+            display: none;
+        }
+        #view-docente:target ~ .container .view-admin,
+        #view-docente:target ~ .container .view-jefe,
+        #view-docente:target ~ .container .view-investigador,
+        #view-docente:target ~ .container .view-alumno {
+            display: none;
+        }
+        #view-investigador:target ~ .container .view-admin,
+        #view-investigador:target ~ .container .view-jefe,
+        #view-investigador:target ~ .container .view-docente,
+        #view-investigador:target ~ .container .view-alumno {
+            display: none;
+        }
+        #view-alumno:target ~ .container .view-admin,
+        #view-alumno:target ~ .container .view-jefe,
+        #view-alumno:target ~ .container .view-docente,
+        #view-alumno:target ~ .container .view-investigador {
+            display: none;
+        }
+
+        /* ===== TARJETAS Y PANELES ===== */
         .dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -116,48 +176,52 @@
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .card h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             color: #9F2241;
             border-left: 4px solid #9F2241;
             padding-left: 0.75rem;
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
         }
 
         .card .number {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 4vw, 2.8rem);
             font-weight: bold;
             color: #9F2241;
-            margin: 0.5rem 0;
+            margin: 0.25rem 0;
         }
 
-        /* Tablas */
+        /* ===== TABLAS ===== */
         .table-container {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 500px;
         }
 
-        th, td {
+        th,
+        td {
             text-align: left;
             padding: 0.75rem;
             border-bottom: 1px solid #eee;
+            font-size: clamp(0.75rem, 1vw, 0.95rem);
         }
 
         th {
@@ -166,26 +230,39 @@
             color: #9F2241;
         }
 
+        /* ===== BADGES ===== */
         .badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.2rem 0.7rem;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
         }
 
-        .badge-active { background: #d4edda; color: #155724; }
-        .badge-pending { background: #fff3cd; color: #856404; }
-        .badge-progress { background: #fce4ec; color: #9F2241; }
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
 
-        /* Botones */
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-progress {
+            background: #fce4ec;
+            color: #9F2241;
+        }
+
+        /* ===== BOTONES ===== */
         .btn {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 1rem;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
         }
 
         .btn-primary {
@@ -208,7 +285,7 @@
             color: white;
         }
 
-        /* Formularios */
+        /* ===== FORMULARIOS ===== */
         .form-group {
             margin-bottom: 1rem;
         }
@@ -217,23 +294,27 @@
             display: block;
             margin-bottom: 0.3rem;
             font-weight: 500;
+            font-size: clamp(0.8rem, 1vw, 0.95rem);
         }
 
-        input, select, textarea {
+        input,
+        select,
+        textarea {
             width: 100%;
             padding: 0.6rem;
             border: 1px solid #ccc;
             border-radius: 6px;
             font-family: inherit;
+            font-size: clamp(0.8rem, 1vw, 0.95rem);
         }
 
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
         }
 
-        /* Noticias / Publicaciones */
+        /* ===== NOTICIAS ===== */
         .news-section {
             background: white;
             border-radius: 12px;
@@ -253,6 +334,7 @@
         .news-title {
             font-weight: bold;
             color: #9F2241;
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
         }
 
         .news-date {
@@ -260,319 +342,415 @@
             color: #888;
         }
 
-        /* Footer */
+        /* ===== FOOTER ===== */
         .footer {
             background: #9F2241;
             color: white;
             text-align: center;
             padding: 1.5rem;
             margin-top: 3rem;
+            font-size: clamp(0.7rem, 1vw, 0.9rem);
         }
 
+        /* ===== RESPONSIVO ===== */
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
-                gap: 1rem;
+                align-items: flex-start;
+                gap: 0.5rem;
             }
+
+            .nav {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 0.25rem 0.75rem;
+            }
+
+            .user-info {
+                align-self: flex-start;
+            }
+
             .container {
                 padding: 0 1rem;
+                margin: 1rem auto;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .card {
+                padding: 1rem;
+            }
+
+            .role-selector {
+                padding: 0.75rem 1rem;
+                gap: 0.5rem;
+            }
+
+            .role-selector a {
+                padding: 0.4rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            .table-container {
+                padding: 1rem;
+            }
+
+            table {
+                min-width: 400px;
+                font-size: 0.8rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.75rem 1rem;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .role-selector a {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.7rem;
+            }
+
+            .container {
+                padding: 0 0.75rem;
+            }
+
+            table {
+                min-width: 300px;
+                font-size: 0.7rem;
+            }
+
+            th,
+            td {
+                padding: 0.4rem 0.5rem;
+            }
+
+            .card .number {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.7rem;
             }
         }
     </style>
 </head>
 <body>
 
-<!-- Header -->
-<header class="header">
-    <div class="header-container">
-        <div class="logo">
-            <h1>📁 Repositorio de Proyectos</h1>
-            <p>Ingeniería en Sistemas Computacionales | Tecnológico de Estudios Superiores de Cuautitlán Izcalli</p>
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>📁 Repositorio de Proyectos</h1>
+                <p>Ingeniería en Sistemas Computacionales | Tecnológico de Estudios Superiores de Cuautitlán Izcalli</p>
+            </div>
+            <div class="user-info">
+                👤 Usuario: <strong>guille@tesci.mx</strong> (Administrador)
+            </div>
+            <nav class="nav">
+                <a href="#">Inicio</a>
+                <a href="#">Proyectos</a>
+                <a href="#">Reportes</a>
+                <a href="#">Noticias</a>
+                <a href="#">Mi Perfil</a>
+                <a href="#">Salir</a>
+            </nav>
         </div>
-        <div class="user-info">
-            👤 Usuario: <strong>guille@tesci.mx</strong> (Administrador)
-        </div>
-        <nav class="nav">
-            <a href="#">Inicio</a>
-            <a href="#">Proyectos</a>
-            <a href="#">Reportes</a>
-            <a href="#">Noticias</a>
-            <a href="#">Mi Perfil</a>
-            <a href="#">Salir</a>
-        </nav>
+    </header>
+
+    <!-- ===== SELECTOR DE ROL (CON :TARGET) ===== -->
+    <div class="role-selector">
+        <a href="#view-admin">👑 Administrador</a>
+        <a href="#view-jefe">📋 Jefe de Carrera</a>
+        <a href="#view-docente">👨‍🏫 Docente</a>
+        <a href="#view-investigador">🔬 Investigador</a>
+        <a href="#view-alumno">🎓 Alumno</a>
     </div>
-</header>
 
-<!-- Selector de rol (simulación de diferentes vistas) -->
-<div class="role-selector" id="roleSelector">
-    <button class="role-btn active" data-role="admin">👑 Administrador</button>
-    <button class="role-btn" data-role="jefe">📋 Jefe de Carrera</button>
-    <button class="role-btn" data-role="docente">👨‍🏫 Docente</button>
-    <button class="role-btn" data-role="investigador">🔬 Investigador</button>
-    <button class="role-btn" data-role="alumno">🎓 Alumno</button>
-</div>
+    <!-- ===== ANCLAS OCULTAS PARA :TARGET ===== -->
+    <div id="view-admin"></div>
+    <div id="view-jefe"></div>
+    <div id="view-docente"></div>
+    <div id="view-investigador"></div>
+    <div id="view-alumno"></div>
 
-<!-- Contenido dinámico según rol -->
-<div class="container" id="dynamicContent">
-    <!-- El contenido se carga con JavaScript -->
-</div>
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <div class="container">
 
-<footer class="footer">
-    <p>Sistema Repositorio de Proyectos para Titulación | TESCI | Todos los derechos reservados | Contáctanos</p>
-</footer>
+        <!-- ========================================================= -->
+        <!-- VISTA ADMINISTRADOR                                        -->
+        <!-- ========================================================= -->
+        <div class="role-view view-admin">
 
-<script>
-    // Datos simulados para el maquetado
-    const proyectos = [
-        { id: 1, titulo: "Plataforma de Gestión Escolar", descripcion: "Desarrollo de un sistema integral para gestión de calificaciones", requisitos: "Conocimientos en React, Node.js, PostgreSQL", docente: "Dr. Camacho", fecha_limite: "15-12-2026", estado: "activo", perfil: "backend" },
-        { id: 2, titulo: "Análisis de Datos Educativos", descripcion: "Minería de datos para predecir deserción escolar", requisitos: "Python, Pandas, Machine Learning", docente: "Dra. González", fecha_limite: "30-11-2026", estado: "activo", perfil: "datos" },
-        { id: 3, titulo: "Aplicación Móvil para Biblioteca", descripcion: "App para consulta y reserva de libros", requisitos: "Flutter, Firebase", docente: "Mtra. López", fecha_limite: "20-10-2026", estado: "activo", perfil: "movil" },
-        { id: 4, titulo: "Sistema de Reconocimiento Facial", descripcion: "Control de acceso mediante IA", requisitos: "Python, OpenCV, Deep Learning", docente: "Dr. Martínez", fecha_limite: "01-12-2026", estado: "activo", perfil: "ia" }
-    ];
-
-    const noticias = [
-        { id: 1, titulo: "Convocatoria para proyectos de titulación 2026-1", fecha: "01-06-2026", autor: "Jefatura ISC", contenido: "Se invita a docentes e investigadores a registrar sus proyectos antes del 30 de agosto." },
-        { id: 2, titulo: "Taller de Desarrollo Ágil con Scrum", fecha: "05-06-2026", autor: "Coordinación de Posgrado", contenido: "Taller gratuito para estudiantes interesados en metodologías ágiles. 15 de junio." },
-        { id: 3, titulo: "Convocatoria de becas CONACYT", fecha: "10-06-2026", autor: "Departamento de Servicios Escolares", contenido: "Aplicación abierta hasta el 31 de julio para estudios de posgrado." }
-    ];
-
-    const estadisticas = {
-        totalAlumnos: 342,
-        totalDocentes: 28,
-        totalInvestigadores: 12,
-        proyectosActivos: 8,
-        alumnosPostulados: 156,
-        tituladosEstimados: 45
-    };
-
-    // Función para renderizar según el rol
-    function renderContent(role) {
-        const container = document.getElementById('dynamicContent');
-        
-        if (role === 'admin') {
-            container.innerHTML = `
-                <!-- Tarjetas de estadísticas -->
-                <div class="dashboard">
-                    <div class="card">
-                        <h3>👨‍🎓 Alumnos registrados</h3>
-                        <div class="number">${estadisticas.totalAlumnos}</div>
-                        <p>+12 este mes</p>
-                    </div>
-                    <div class="card">
-                        <h3>👩‍🏫 Docentes</h3>
-                        <div class="number">${estadisticas.totalDocentes}</div>
-                        <p>+2 investigadores asociados</p>
-                    </div>
-                    <div class="card">
-                        <h3>📋 Proyectos activos</h3>
-                        <div class="number">${estadisticas.proyectosActivos}</div>
-                        <p>${estadisticas.alumnosPostulados} alumnos postulados</p>
-                    </div>
-                    <div class="card">
-                        <h3>🎓 Titulados estimados</h3>
-                        <div class="number">${estadisticas.tituladosEstimados}</div>
-                        <p>Meta: 80 titulados en 2025</p>
-                    </div>
-                </div>
-
-                <!-- Gráfica simulada -->
+            <!-- Tarjetas de estadísticas -->
+            <div class="dashboard">
                 <div class="card">
-                    <h3>📊 Avance de titulación por carrera</h3>
-                    <div style="height: 200px; background: linear-gradient(to top, #9F2241 0%, #9F2241 45%, #c04d6e 45%, #c04d6e 70%, #e07a99 70%, #e07a99 100%); border-radius: 8px; margin-top: 10px;"></div>
-                    <div class="grid-2" style="margin-top: 15px;">
-                        <div>🔵 ISC: 45 titulados</div>
-                        <div>🔷 Industrial: 38 titulados</div>
-                        <div>💠 Gestión: 22 titulados</div>
-                        <div>🌀 Mecatrónica: 31 titulados</div>
-                    </div>
+                    <h3>👨‍🎓 Alumnos registrados</h3>
+                    <div class="number">342</div>
+                    <p>+12 este mes</p>
                 </div>
-
-                <!-- Gestión de usuarios -->
-                <div class="table-container">
-                    <h3>👥 Gestión de Usuarios</h3>
-                    <button class="btn btn-primary" style="margin-bottom: 1rem;">+ Agregar usuario</button>
-                    <table>
-                        <thead>
-                            <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Carrera</th><th>Estado</th><th>Acciones</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Juan Pérez</td><td>juan@tecnologico.mx</td><td>Alumno</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
-                            <tr><td>María López</td><td>maria.lopez@tecnologico.mx</td><td>Docente</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
-                            <tr><td>Carlos Ruiz</td><td>cruiz@tecnologico.mx</td><td>Investigador</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
-                            <tr><td>Ana Torres</td><td>ana.torres@tecnologico.mx</td><td>Jefe de Carrera</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
-                        </tbody>
-                    </table>
+                <div class="card">
+                    <h3>👩‍🏫 Docentes</h3>
+                    <div class="number">28</div>
+                    <p>+2 investigadores asociados</p>
                 </div>
+                <div class="card">
+                    <h3>📋 Proyectos activos</h3>
+                    <div class="number">8</div>
+                    <p>156 alumnos postulados</p>
+                </div>
+                <div class="card">
+                    <h3>🎓 Titulados estimados</h3>
+                    <div class="number">45</div>
+                    <p>Meta: 80 titulados en 2025</p>
+                </div>
+            </div>
 
-                <!-- Reportes -->
+            <!-- Gráfica simulada -->
+            <div class="card">
+                <h3>📊 Avance de titulación por carrera</h3>
+                <div style="height: 200px; background: linear-gradient(to top, #9F2241 0%, #9F2241 45%, #c04d6e 45%, #c04d6e 70%, #e07a99 70%, #e07a99 100%); border-radius: 8px; margin-top: 10px;"></div>
+                <div class="grid-2" style="margin-top: 15px;">
+                    <div>🔵 ISC: 45 titulados</div>
+                    <div>🔷 Industrial: 38 titulados</div>
+                    <div>💠 Gestión: 22 titulados</div>
+                    <div>🌀 Mecatrónica: 31 titulados</div>
+                </div>
+            </div>
+
+            <!-- Gestión de usuarios -->
+            <div class="table-container">
+                <h3>👥 Gestión de Usuarios</h3>
+                <button class="btn btn-primary" style="margin-bottom: 1rem;">+ Agregar usuario</button>
+                <table>
+                    <thead>
+                        <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Carrera</th><th>Estado</th><th>Acciones</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Juan Pérez</td><td>juan@tecnologico.mx</td><td>Alumno</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                        <tr><td>María López</td><td>maria.lopez@tecnologico.mx</td><td>Docente</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                        <tr><td>Carlos Ruiz</td><td>cruiz@tecnologico.mx</td><td>Investigador</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                        <tr><td>Ana Torres</td><td>ana.torres@tecnologico.mx</td><td>Jefe de Carrera</td><td>ISC</td><td><span class="badge badge-active">Activo</span></td><td><button class="btn btn-outline">Editar</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Reportes -->
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📄 Generar Reportes</h3>
+                    <select style="margin: 10px 0;">
+                        <option>Reporte de alumnos por proyecto</option>
+                        <option>Reporte de docentes por proyecto</option>
+                        <option>Reporte de postulaciones</option>
+                        <option>Reporte general de titulación</option>
+                    </select>
+                    <button class="btn btn-primary">Generar reporte (PDF)</button>
+                </div>
+                <div class="card">
+                    <h3>📈 Estadísticas de la plataforma</h3>
+                    <p>Total inscritos: 382</p>
+                    <p>Proyectos publicados: 12</p>
+                    <p>Postulaciones realizadas: 187</p>
+                    <progress value="45" max="100" style="width:100%; height:10px;"></progress>
+                    <p>45% de avance en meta de titulación</p>
+                </div>
+            </div>
+
+            <!-- Noticias -->
+            <div class="news-section">
+                <h3>📢 Publicaciones y noticias (Todas las carreras)</h3>
+                <button class="btn btn-primary" style="margin-bottom: 1rem;">+ Nueva publicación</button>
+                <div class="news-item">
+                    <div class="news-title">Convocatoria para proyectos de titulación 2026-1</div>
+                    <div class="news-date">01-06-2026 | Por: Jefatura ISC</div>
+                    <p>Se invita a docentes e investigadores a registrar sus proyectos antes del 30 de agosto.</p>
+                    <button class="btn btn-outline" style="margin-top: 0.5rem;">Editar</button>
+                    <button class="btn btn-outline" style="margin-top: 0.5rem;">Eliminar</button>
+                </div>
+                <div class="news-item">
+                    <div class="news-title">Taller de Desarrollo Ágil con Scrum</div>
+                    <div class="news-date">05-06-2026 | Por: Coordinación de Posgrado</div>
+                    <p>Taller gratuito para estudiantes interesados en metodologías ágiles. 15 de junio.</p>
+                    <button class="btn btn-outline" style="margin-top: 0.5rem;">Editar</button>
+                    <button class="btn btn-outline" style="margin-top: 0.5rem;">Eliminar</button>
+                </div>
+                <div class="news-item">
+                    <div class="news-title">Convocatoria de becas CONACYT</div>
+                    <div class="news-date">10-06-2026 | Por: Departamento de Servicios Escolares</div>
+                    <p>Aplicación abierta hasta el 31 de julio para estudios de posgrado.</p>
+                    <button class="btn btn-outline" style="margin-top: 0.5rem;">Editar</button>
+                    <button class="btn btn-outline" style="margin-top: 0.5rem;">Eliminar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- VISTA JEFE DE CARRERA                                      -->
+        <!-- ========================================================= -->
+        <div class="role-view view-jefe">
+
+            <div class="dashboard">
+                <div class="card"><h3>📊 Proyectos activos en ISC</h3><div class="number">4</div></div>
+                <div class="card"><h3>👨‍🎓 Alumnos postulados</h3><div class="number">78</div></div>
+                <div class="card"><h3>👩‍🏫 Docentes participantes</h3><div class="number">12</div></div>
+            </div>
+
+            <div class="card">
+                <h3>📈 Gráfica de avance de titulación (ISC)</h3>
+                <div style="height: 150px; background: linear-gradient(90deg, #9F2241 0%, #9F2241 35%, #c04d6e 35%, #c04d6e 65%, #e07a99 65%, #e07a99 100%); border-radius: 8px;"></div>
+                <div class="grid-2" style="margin-top: 10px;"><div>2023: 32 titulados</div><div>2024: 41 titulados</div><div>2025: 24 (al momento)</div></div>
+            </div>
+
+            <div class="table-container">
+                <h3>📋 Proyectos de la carrera</h3>
+                <button class="btn btn-primary" style="margin-bottom:1rem;">+ Crear proyecto</button>
+                <table>
+                    <thead><tr><th>Título</th><th>Docente/Investigador</th><th>Fecha límite</th><th>Postulantes</th><th>Estado</th></tr></thead>
+                    <tbody>
+                        <tr><td>Plataforma de Gestión Escolar</td><td>Dr. Camacho</td><td>15-12-2026</td><td>8</td><td><span class="badge badge-progress">Activo</span></td></tr>
+                        <tr><td>Análisis de Datos Educativos</td><td>Dra. González</td><td>30-11-2026</td><td>12</td><td><span class="badge badge-progress">Activo</span></td></tr>
+                        <tr><td>Aplicación Móvil para Biblioteca</td><td>Mtra. López</td><td>20-10-2026</td><td>6</td><td><span class="badge badge-progress">Activo</span></td></tr>
+                        <tr><td>Sistema de Reconocimiento Facial</td><td>Dr. Martínez</td><td>01-12-2026</td><td>9</td><td><span class="badge badge-progress">Activo</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="news-section">
+                <h3>📢 Publicar noticias para ISC</h3>
+                <textarea placeholder="Escribe aquí la noticia..." rows="3" style="width:100%; margin-bottom:1rem;"></textarea>
+                <button class="btn btn-primary">Publicar</button>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- VISTA DOCENTE                                              -->
+        <!-- ========================================================= -->
+        <div class="role-view view-docente">
+
+            <div class="dashboard">
+                <div class="card"><h3>📌 Mis proyectos activos</h3><div class="number">3</div></div>
+                <div class="card"><h3>👥 Alumnos postulados</h3><div class="number">24</div></div>
+                <div class="card"><h3>✅ Proyectos completados</h3><div class="number">5</div></div>
+            </div>
+
+            <div class="card">
+                <h3>➕ Publicar nuevo proyecto</h3>
                 <div class="grid-2">
-                    <div class="card">
-                        <h3>📄 Generar Reportes</h3>
-                        <select style="margin: 10px 0;">
-                            <option>Reporte de alumnos por proyecto</option>
-                            <option>Reporte de docentes por proyecto</option>
-                            <option>Reporte de postulaciones</option>
-                            <option>Reporte general de titulación</option>
-                        </select>
-                        <button class="btn btn-primary">Generar reporte (PDF)</button>
-                    </div>
-                    <div class="card">
-                        <h3>📈 Estadísticas de la plataforma</h3>
-                        <p>Total inscritos: ${estadisticas.totalAlumnos + estadisticas.totalDocentes + estadisticas.totalInvestigadores}</p>
-                        <p>Proyectos publicados: 12</p>
-                        <p>Postulaciones realizadas: 187</p>
-                        <progress value="45" max="100" style="width:100%; height:10px;"></progress>
-                        <p>45% de avance en meta de titulación</p>
-                    </div>
+                    <div class="form-group"><label>Título</label><input type="text" placeholder="Ej: Desarrollo de aplicación web"></div>
+                    <div class="form-group"><label>Fecha límite</label><input type="date"></div>
+                    <div class="form-group"><label>Perfil requerido</label><select><option>Frontend</option><option>Backend</option><option>Datos</option><option>Móvil</option><option>IA</option></select></div>
+                    <div class="form-group"><label>Número de plazas</label><input type="number" placeholder="3"></div>
                 </div>
+                <div class="form-group"><label>Descripción</label><textarea rows="3" placeholder="Describe el proyecto..."></textarea></div>
+                <div class="form-group"><label>Requisitos</label><textarea rows="2" placeholder="Conocimientos necesarios..."></textarea></div>
+                <button class="btn btn-primary">Publicar proyecto</button>
+            </div>
 
-                <!-- Noticias (gestión) -->
-                <div class="news-section">
-                    <h3>📢 Publicaciones y noticias (Todas las carreras)</h3>
-                    <button class="btn btn-primary" style="margin-bottom: 1rem;">+ Nueva publicación</button>
-                    ${noticias.map(n => `
-                        <div class="news-item">
-                            <div class="news-title">${n.titulo}</div>
-                            <div class="news-date">${n.fecha} | Por: ${n.autor}</div>
-                            <p>${n.contenido}</p>
-                            <button class="btn btn-outline" style="margin-top: 0.5rem;">Editar</button>
-                            <button class="btn btn-outline" style="margin-top: 0.5rem;">Eliminar</button>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        } 
-        else if (role === 'jefe') {
-            container.innerHTML = `
-                <div class="dashboard">
-                    <div class="card"><h3>📊 Proyectos activos en ISC</h3><div class="number">${proyectos.length}</div></div>
-                    <div class="card"><h3>👨‍🎓 Alumnos postulados</h3><div class="number">78</div></div>
-                    <div class="card"><h3>👩‍🏫 Docentes participantes</h3><div class="number">12</div></div>
-                </div>
-                <div class="card">
-                    <h3>📈 Gráfica de avance de titulación (ISC)</h3>
-                    <div style="height: 150px; background: linear-gradient(90deg, #9F2241 0%, #9F2241 35%, #c04d6e 35%, #c04d6e 65%, #e07a99 65%, #e07a99 100%); border-radius: 8px;"></div>
-                    <div class="grid-2" style="margin-top: 10px;"><div>2023: 32 titulados</div><div>2024: 41 titulados</div><div>2025: 24 (al momento)</div></div>
-                </div>
-                <div class="table-container">
-                    <h3>📋 Proyectos de la carrera</h3>
-                    <button class="btn btn-primary" style="margin-bottom:1rem;">+ Crear proyecto</button>
-                    <table><thead><tr><th>Título</th><th>Docente/Investigador</th><th>Fecha límite</th><th>Postulantes</th><th>Estado</th></tr></thead><tbody>
-                        ${proyectos.map(p => `<tr><td>${p.titulo}</td><td>${p.docente}</td><td>${p.fecha_limite}</td><td>${Math.floor(Math.random()*15)+5}</td><td><span class="badge badge-progress">Activo</span></td></tr>`).join('')}
-                    </tbody></table>
-                </div>
-                <div class="news-section">
-                    <h3>📢 Publicar noticias para ISC</h3>
-                    <textarea placeholder="Escribe aquí la noticia..." rows="3" style="width:100%; margin-bottom:1rem;"></textarea>
-                    <button class="btn btn-primary">Publicar</button>
-                </div>
-            `;
-        }
-        else if (role === 'docente') {
-            container.innerHTML = `
-                <div class="dashboard">
-                    <div class="card"><h3>📌 Mis proyectos activos</h3><div class="number">3</div></div>
-                    <div class="card"><h3>👥 Alumnos postulados</h3><div class="number">24</div></div>
-                    <div class="card"><h3>✅ Proyectos completados</h3><div class="number">5</div></div>
-                </div>
-                <div class="card">
-                    <h3>➕ Publicar nuevo proyecto</h3>
-                    <div class="grid-2">
-                        <div class="form-group"><label>Título</label><input type="text" placeholder="Ej: Desarrollo de aplicación web"></div>
-                        <div class="form-group"><label>Fecha límite</label><input type="date"></div>
-                        <div class="form-group"><label>Perfil requerido</label><select><option>Frontend</option><option>Backend</option><option>Datos</option><option>Móvil</option><option>IA</option></select></div>
-                        <div class="form-group"><label>Número de plazas</label><input type="number" placeholder="3"></div>
-                    </div>
-                    <div class="form-group"><label>Descripción</label><textarea rows="3" placeholder="Describe el proyecto..."></textarea></div>
-                    <div class="form-group"><label>Requisitos</label><textarea rows="2" placeholder="Conocimientos necesarios..."></textarea></div>
-                    <button class="btn btn-primary">Publicar proyecto</button>
-                </div>
-                <div class="table-container">
-                    <h3>📋 Mis proyectos publicados</h3>
-                    <table><thead><tr><th>Título</th><th>Postulantes</th><th>Estado</th><th>Acciones</th></tr></thead><tbody>
-                        ${proyectos.slice(0,2).map(p => `<tr><td>${p.titulo}</td><td>${Math.floor(Math.random()*10)+5}</td><td><span class="badge badge-progress">En curso</span></td><td><button class="btn btn-outline">Ver postulantes</button></td></tr>`).join('')}
-                    </tbody></table>
-                </div>
-            `;
-        }
-        else if (role === 'investigador') {
-            container.innerHTML = `
-                <div class="dashboard">
-                    <div class="card"><h3>🔬 Proyectos de investigación</h3><div class="number">2</div></div>
-                    <div class="card"><h3>👥 Alumnos colaboradores</h3><div class="number">8</div></div>
-                </div>
-                <div class="card">
-                    <h3>➕ Registrar proyecto de investigación</h3>
-                    <div class="grid-2">
-                        <div class="form-group"><label>Título</label><input placeholder="Título del proyecto"></div>
-                        <div class="form-group"><label>Área</label><select><option>IA</option><option>Redes</option><option>Bases de datos</option><option>Software educativo</option></select></div>
-                    </div>
-                    <div class="form-group"><label>Descripción</label><textarea rows="3"></textarea></div>
-                    <button class="btn btn-primary">Registrar proyecto</button>
-                </div>
-                <div class="news-section">
-                    <h3>📢 Convocatorias para investigación</h3>
-                    <p>Próxima convocatoria de proyectos de investigación: 15 de agosto de 2026</p>
-                </div>
-            `;
-        }
-        else if (role === 'alumno') {
-            container.innerHTML = `
-                <div class="dashboard">
-                    <div class="card"><h3>📋 Proyectos disponibles</h3><div class="number">${proyectos.length}</div></div>
-                    <div class="card"><h3>📌 Mis postulaciones</h3><div class="number">2</div></div>
-                    <div class="card"><h3>✅ Perfil completado</h3><div class="number">85%</div></div>
-                </div>
-                <div class="card">
-                    <h3>🎯 Recomendados para tu perfil</h3>
-                    <p>Basado en tus habilidades: Backend, Bases de datos</p>
-                    <div class="badge badge-active">Backend</div>
-                    <div class="badge badge-active">PostgreSQL</div>
-                    <div class="badge badge-active">Node.js</div>
-                </div>
-                <div class="table-container">
-                    <h3>📋 Catálogo de proyectos</h3>
-                    <input type="text" placeholder="Buscar por título, docente o requisitos..." style="width:100%; margin-bottom:1rem; padding:0.5rem;">
-                    <table><thead><tr><th>Título</th><th>Descripción</th><th>Docente</th><th>Fecha límite</th><th>Perfil requerido</th><th></th></tr></thead><tbody>
-                        ${proyectos.map(p => `
-                            <tr>
-                                <td><strong>${p.titulo}</strong></td>
-                                <td>${p.descripcion.substring(0,60)}...</td>
-                                <td>${p.docente}</td>
-                                <td>${p.fecha_limite}</td>
-                                <td><span class="badge badge-progress">${p.perfil}</span></td>
-                                <td><button class="btn btn-primary" style="padding:0.3rem 0.8rem;">Postularme</button></td>
-                            </tr>
-                        `).join('')}
-                    </tbody></table>
-                </div>
-                <div class="news-section">
-                    <h3>📢 Últimas noticias</h3>
-                    ${noticias.slice(0,2).map(n => `
-                        <div class="news-item">
-                            <div class="news-title">${n.titulo}</div>
-                            <div class="news-date">${n.fecha}</div>
-                            <p>${n.contenido.substring(0,100)}...</p>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-    }
+            <div class="table-container">
+                <h3>📋 Mis proyectos publicados</h3>
+                <table>
+                    <thead><tr><th>Título</th><th>Postulantes</th><th>Estado</th><th>Acciones</th></tr></thead>
+                    <tbody>
+                        <tr><td>Plataforma de Gestión Escolar</td><td>8</td><td><span class="badge badge-progress">En curso</span></td><td><button class="btn btn-outline">Ver postulantes</button></td></tr>
+                        <tr><td>Análisis de Datos Educativos</td><td>12</td><td><span class="badge badge-progress">En curso</span></td><td><button class="btn btn-outline">Ver postulantes</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    // Event listeners para el selector de rol
-    document.querySelectorAll('.role-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Actualizar clase activa
-            document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const role = btn.getAttribute('data-role');
-            renderContent(role);
-        });
-    });
+        <!-- ========================================================= -->
+        <!-- VISTA INVESTIGADOR                                         -->
+        <!-- ========================================================= -->
+        <div class="role-view view-investigador">
 
-    // Render inicial (Administrador)
-    renderContent('admin');
-</script>
+            <div class="dashboard">
+                <div class="card"><h3>🔬 Proyectos de investigación</h3><div class="number">2</div></div>
+                <div class="card"><h3>👥 Alumnos colaboradores</h3><div class="number">8</div></div>
+            </div>
+
+            <div class="card">
+                <h3>➕ Registrar proyecto de investigación</h3>
+                <div class="grid-2">
+                    <div class="form-group"><label>Título</label><input placeholder="Título del proyecto"></div>
+                    <div class="form-group"><label>Área</label><select><option>IA</option><option>Redes</option><option>Bases de datos</option><option>Software educativo</option></select></div>
+                </div>
+                <div class="form-group"><label>Descripción</label><textarea rows="3"></textarea></div>
+                <button class="btn btn-primary">Registrar proyecto</button>
+            </div>
+
+            <div class="news-section">
+                <h3>📢 Convocatorias para investigación</h3>
+                <p>Próxima convocatoria de proyectos de investigación: 15 de agosto de 2026</p>
+            </div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- VISTA ALUMNO                                               -->
+        <!-- ========================================================= -->
+        <div class="role-view view-alumno">
+
+            <div class="dashboard">
+                <div class="card"><h3>📋 Proyectos disponibles</h3><div class="number">4</div></div>
+                <div class="card"><h3>📌 Mis postulaciones</h3><div class="number">2</div></div>
+                <div class="card"><h3>✅ Perfil completado</h3><div class="number">85%</div></div>
+            </div>
+
+            <div class="card">
+                <h3>🎯 Recomendados para tu perfil</h3>
+                <p>Basado en tus habilidades: Backend, Bases de datos</p>
+                <span class="badge badge-active">Backend</span>
+                <span class="badge badge-active">PostgreSQL</span>
+                <span class="badge badge-active">Node.js</span>
+            </div>
+
+            <div class="table-container">
+                <h3>📋 Catálogo de proyectos</h3>
+                <input type="text" placeholder="Buscar por título, docente o requisitos..." style="width:100%; margin-bottom:1rem; padding:0.5rem;">
+                <table>
+                    <thead><tr><th>Título</th><th>Descripción</th><th>Docente</th><th>Fecha límite</th><th>Perfil</th><th></th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Plataforma de Gestión Escolar</strong></td><td>Desarrollo de un sistema integral para gestión de calificaciones...</td><td>Dr. Camacho</td><td>15-12-2026</td><td><span class="badge badge-progress">backend</span></td><td><button class="btn btn-primary" style="padding:0.3rem 0.8rem;">Postularme</button></td></tr>
+                        <tr><td><strong>Análisis de Datos Educativos</strong></td><td>Minería de datos para predecir deserción escolar...</td><td>Dra. González</td><td>30-11-2026</td><td><span class="badge badge-progress">datos</span></td><td><button class="btn btn-primary" style="padding:0.3rem 0.8rem;">Postularme</button></td></tr>
+                        <tr><td><strong>Aplicación Móvil para Biblioteca</strong></td><td>App para consulta y reserva de libros...</td><td>Mtra. López</td><td>20-10-2026</td><td><span class="badge badge-progress">movil</span></td><td><button class="btn btn-primary" style="padding:0.3rem 0.8rem;">Postularme</button></td></tr>
+                        <tr><td><strong>Sistema de Reconocimiento Facial</strong></td><td>Control de acceso mediante IA...</td><td>Dr. Martínez</td><td>01-12-2026</td><td><span class="badge badge-progress">ia</span></td><td><button class="btn btn-primary" style="padding:0.3rem 0.8rem;">Postularme</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="news-section">
+                <h3>📢 Últimas noticias</h3>
+                <div class="news-item">
+                    <div class="news-title">Convocatoria para proyectos de titulación 2026-1</div>
+                    <div class="news-date">01-06-2026</div>
+                    <p>Se invita a docentes e investigadores a registrar sus proyectos antes del 30 de agosto...</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-title">Taller de Desarrollo Ágil con Scrum</div>
+                    <div class="news-date">05-06-2026</div>
+                    <p>Taller gratuito para estudiantes interesados en metodologías ágiles. 15 de junio...</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <p>Sistema Repositorio de Proyectos para Titulación | TESCI | Todos los derechos reservados | Contáctanos</p>
+    </footer>
+
 </body>
 </html>
